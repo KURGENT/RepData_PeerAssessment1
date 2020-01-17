@@ -20,53 +20,11 @@ First load necessary packages.
 setwd("~/coursera/5. Reproducible Research/Wk 2/HW")
 
 library(dplyr)
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.6.1
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 library(tidyr)
-```
-
-```
-## Warning: package 'tidyr' was built under R version 3.6.1
-```
-
-```r
 library(knitr)
 library(markdown)
-```
-
-```
-## Warning: package 'markdown' was built under R version 3.6.2
-```
-
-```r
 library(rmarkdown)
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.6.1
 ```
 Load the data (read.csv) 
 
