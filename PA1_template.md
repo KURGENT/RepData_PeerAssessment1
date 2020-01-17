@@ -3,16 +3,10 @@ title: "PA1_template"
 author: "KUrgent"
 date: "1/16/2020"
 output:
-  html_document: default
-  
+  html_document:
+  keep_md: true
 
-editor_options: 
-  chunk_output_type: console
 ---
-
-
-
-
 
 First load necessary packages.  
 
@@ -21,7 +15,6 @@ setwd("~/coursera/5. Reproducible Research/Wk 2/HW")
 
 library(dplyr)
 library(tidyr)
-library(knitr)
 library(markdown)
 library(rmarkdown)
 library(ggplot2)
@@ -82,7 +75,7 @@ h <- ggplot(data = stepsbydate,aes(x=ttl.steps)) +
 h
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+<img src="PA1_template_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 Project1 - Q2  
 What is the average daily activity pattern?  
@@ -117,7 +110,7 @@ q2 <- ggplot(data = activity2,aes(x = interval, y = avesteps)) +
 q2
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+<img src="PA1_template_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
 To find which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps,  
 1. First, find the maximum value of average steps from the dataset  
@@ -247,13 +240,13 @@ h3 <- ggplot(data = stepsbydate2,aes(x=ttl.steps)) +
 h3
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
+<img src="PA1_template_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 This histogram is different from the one created eariler.
 
 
-The mean is **1.0581 &times; 10<sup>4</sup>**.
-The median is **1.0395 &times; 10<sup>4</sup>**.
+The mean is **1.0581\times 10^{4}**.
+The median is **1.0395\times 10^{4}**.
 
 So, by imputing missing values by mean number of steps for an equivalant
 interval pulled the mean up, but the median was not changed.
@@ -359,21 +352,6 @@ q4 <- ggplot(data = all,aes(x = interval, y = avesteps)) +
 q4
 ```
 
-![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
+<img src="PA1_template_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 
-```r
-setwd("~/coursera/5. Reproducible Research/Wk 2/HW")
-library(knitr)
-knit("PA1_template.Rmd",output = NULL)
-```
-
-```
-## 
-## 
-## processing file: PA1_template.Rmd
-```
-
-```
-## Error in parse_block(g[-1], g[1], params.src): duplicate label 'setup'
-```
