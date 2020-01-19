@@ -2,11 +2,14 @@
 title: "test1"
 author: "KUrgent"
 date: "1/16/2020"
-output: html_document
+output: 
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
 ---
-this change is a test change
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, results = TRUE)
+knitr::opts_chunk$set(echo = TRUE, results = 'asis')
 ```
 
 
@@ -23,7 +26,7 @@ library(markdown)
 library(ggplot2)
 ```
 Load the data (read.csv) 
-```{r, echo=TRUE,results='asis'}
+```{r}
 activity <- read.csv("activity.csv")
 ```
 Q1 What is the mean total number of steps taken per day?  
@@ -33,7 +36,7 @@ Reshape the dataset to a dataframe which has means of the total steps per day.
 And call the object, "stepbydate.  
 Also, make sure that data in date is formatted as date.
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 stepsbydate <- activity %>%
         group_by(date) %>%
         summarise(ttl.steps = sum(steps,na.rm = TRUE)) %>%
@@ -42,12 +45,12 @@ stepsbydate <- activity %>%
 
 Find out the mean and median of steps taken by day, using summary function.  
 
-```{r,, echo=TRUE,results='asis'}
+```{r}
 summary(stepsbydate)
 ```
 
 Make a histogram of the total number of steps taken by day. 
-```{r,echo=TRUE}
+```{r plot1}
 h <- ggplot(data = stepsbydate,aes(x=ttl.steps)) +
         geom_histogram(binwidth = 1000,
                        col = "green",fill = "green", alpha = 0.5) +
@@ -71,13 +74,13 @@ What is the average daily activity pattern?
 
 Find the how many days in the "activity"data.
 
-```{r,, echo=TRUE,results='asis'}
+```{r}
 length(unique(stepsbydate$date))
 ```
 
 To make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken,averaged across all days (y-axis), create a dataset called "activity2".
 
-```{r,, echo=TRUE,results='asis'}
+```{r}
 activity2 <- activity %>%
   group_by(interval)%>%
   summarise(ttl.steps = sum(steps,na.rm = TRUE))%>% 
@@ -86,7 +89,7 @@ activity2 <- activity %>%
 
 Plot "activity2".
 
-```{r,echo=TRUE,results='asis'}
+```{r plot2}
 q2 <- ggplot(data = activity2,aes(x = interval, y = avesteps)) + 
   geom_line(size = 0.5,na.rm = TRUE) +
   ylab("Average Numbers of Steps taken")
@@ -98,7 +101,7 @@ To find which 5-minute interval, on average across all the days in the dataset, 
 1. First, find the maximum value of average steps from the dataset  
 2. Filter the dataset using the velue from #1
 
-```{r,echo=TRUE,results='asis'}
+```{r}
 maxave <-  max(activity2$avesteps, na.rm = TRUE)
 
 maxinterval <- activity2 %>%
@@ -115,7 +118,7 @@ Now the missing data will be imputed by the mean number of steps for the interva
 
 Count the number of "NA" in column "steps", "date", "interval".
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 sum(is.na(activity$steps))
 sum(is.na(activity$date))
 sum(is.na(activity$interval))
@@ -125,7 +128,7 @@ So we know that only "steps' column contains NA.
 There are **`r sum(is.na(activity$steps))`** missing values in the column.
 
 First replace NA with "0" so that "aggregate' function can be used.  
-```{r, echo=TRUE,results='asis'}
+```{r}
 XnoNA <- activity %>%
   mutate(steps = ifelse(is.na(steps),0,steps))
 ```
@@ -134,7 +137,7 @@ Make a table showing mean # of steps by each interval and saved it in a data fra
 called **"meanbyinterval"**.  We will replace any missing data in "steps" column with the mean number of steps for an equivalent interval.
 
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 meanbyinterval <- aggregate(XnoNA[,1],list(XnoNA$interval),mean)
 meanbyinterval <- meanbyinterval%>%
   rename(interval = Group.1, mean.steps = x)
@@ -145,7 +148,7 @@ Make a imputed list
  2.create a new column which shows each interval's mean steps
 if steps  = NA (missing value), or else, leave as they are
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 imputed <- activity %>%
   inner_join(meanbyinterval, by = "interval") %>%
   mutate(steps = ifelse(is.na(steps),mean.steps,steps))
@@ -155,7 +158,7 @@ To make a histogram of the total number of steps taken each day,
 again create a data frame showing ttl steps by date.
 We call this object as "stepbydate2".  
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 stepsbydate2 <- imputed %>%
   group_by(date) %>%
   summarise(ttl.steps = sum(steps)) %>%
@@ -163,14 +166,14 @@ stepsbydate2 <- imputed %>%
 ```
 
 Find out the mean and median total number of steps taken per day.
-```{r, echo=TRUE,results='asis'}
+```{r}
 summary(stepsbydate2)
 ```
 
 
 Then make a histogram of ttl number of steps per day.
 
-```{r, echo=TRUE,results='asis'}
+```{r plot3}
 h3 <- ggplot(data = stepsbydate2,aes(x=ttl.steps)) +
   geom_histogram(binwidth = 1000,
                  col = "green",fill = "green", alpha = 0.5) +
@@ -206,7 +209,7 @@ Using the previously created data frame, **"meanbyinterval"**, which shows the m
 1.create a new column for interval mean for each interval (auto name = mean.steps)
 2.create a new column which shows each interval's mean steps if steps  = NA (missing value), or else, leave as they are.
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 imputed_wk <- activity %>%
   inner_join(meanbyinterval, by = "interval") %>%
   mutate(steps = ifelse(is.na(steps),mean.steps,steps)) %>%
@@ -217,7 +220,7 @@ imputed_wk <- activity %>%
 
 
 Find how many days are weekdays
-```{r, echo=TRUE,results='asis'}
+```{r}
 weekdays <- imputed_wk %>%
   filter(weekdays.cat == "weekday")
 unique(weekdays$weekdays)
@@ -227,7 +230,7 @@ length(unique(weekdays$date))
 45 days are weekdays.
 
 Find how many days are weekend
-```{r, echo=TRUE,results='asis'}
+```{r}
 weekend <- imputed_wk %>%
   filter(weekdays.cat == "weekend")
 unique(weekend$weekdays)
@@ -238,7 +241,7 @@ length(unique(weekend$date))
 
 Create a data frame to include only weekend.
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 weekend<- imputed_wk %>%
   filter(weekdays.cat == "weekend") %>%
   group_by(interval)%>%
@@ -249,7 +252,7 @@ weekend<- imputed_wk %>%
 
 Create the one for weekdays and do the same.
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 weekday<- imputed_wk %>%
   filter(weekdays.cat == "weekday") %>%
   group_by(interval)%>%
@@ -260,13 +263,13 @@ weekday<- imputed_wk %>%
 
 Combine weekend and weekday dataframes and create an object, "all".
 
-```{r, echo=TRUE,results='asis'}
+```{r}
 all <- rbind(weekend, weekday)
 ```
 
 Then create a panel plot containing a time series plot of the 5-minute interval(x-axis) and the average number of steps taken, across all weekday days or weekend days (y-axis).
 
-```{r, echo=TRUE,results='asis'}
+```{r plot4}
 q4 <- ggplot(data = all,aes(x = interval, y = avesteps)) + 
   geom_line(size = 0.5,na.rm = TRUE) +
   facet_grid(weekdays.cat~.) +

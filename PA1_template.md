@@ -1,18 +1,77 @@
 ---
-title: "PA1_template"
+title: "test1"
 author: "KUrgent"
 date: "1/16/2020"
-output:
-  html_document:
-    keep_md: yes
+output: 
+  html_document: 
     fig_caption: yes
-    toc: yes
-    self_contained: no
+    keep_md: yes
 ---
 
 
 
 
+
+First load necessary packages.  
+
+```r
+setwd("~/coursera/5. Reproducible Research/Wk 2/HW")
+
+library(dplyr)
+```
+
+```
+## Warning: package 'dplyr' was built under R version 3.6.1
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
+library(tidyr)
+```
+
+```
+## Warning: package 'tidyr' was built under R version 3.6.1
+```
+
+```r
+library(knitr)
+```
+
+```
+## Warning: package 'knitr' was built under R version 3.6.1
+```
+
+```r
+library(markdown)
+```
+
+```
+## Warning: package 'markdown' was built under R version 3.6.2
+```
+
+```r
+library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.6.1
+```
 Load the data (read.csv) 
 
 ```r
@@ -50,7 +109,6 @@ summary(stepsbydate)
 
 Make a histogram of the total number of steps taken by day. 
 
-
 ```r
 h <- ggplot(data = stepsbydate,aes(x=ttl.steps)) +
         geom_histogram(binwidth = 1000,
@@ -66,10 +124,11 @@ h <- ggplot(data = stepsbydate,aes(x=ttl.steps)) +
   geom_text(aes(label="(median)",y=9,x=11500),
             vjust=1,col='blue',size=3) +  #label the median value
   xlab("total steps per day")
+  
 h
 ```
 
-![](Figs/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/plot1-1.png)<!-- -->
 
 Project1 - Q2  
 What is the average daily activity pattern?  
@@ -104,7 +163,7 @@ q2 <- ggplot(data = activity2,aes(x = interval, y = avesteps)) +
 q2
 ```
 
-![](Figs/unnamed-chunk-7-1.png)<!-- -->
+![](PA1_template_files/figure-html/plot2-1.png)<!-- -->
 
 To find which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps,  
 1. First, find the maximum value of average steps from the dataset  
@@ -234,9 +293,10 @@ h3 <- ggplot(data = stepsbydate2,aes(x=ttl.steps)) +
 h3
 ```
 
-![](Figs/unnamed-chunk-15-1.png)<!-- -->
+![](PA1_template_files/figure-html/plot3-1.png)<!-- -->
 
 This histogram is different from the one created eariler.
+
 
 The mean is **1.0581\times 10^{4}**.
 The median is **1.0395\times 10^{4}**.
@@ -345,5 +405,4 @@ q4 <- ggplot(data = all,aes(x = interval, y = avesteps)) +
 q4
 ```
 
-![](Figs/unnamed-chunk-22-1.png)<!-- -->
-
+![](PA1_template_files/figure-html/plot4-1.png)<!-- -->
